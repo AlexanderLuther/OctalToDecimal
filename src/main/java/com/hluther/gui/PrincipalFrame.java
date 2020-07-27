@@ -245,7 +245,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void octalTextAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_octalTextAreaKeyTyped
         char c = evt.getKeyChar();
-        if(c < '0' || c > '9' || octalTextArea.getText().length()>9) evt.consume(); 
+        if(c < '0' || c > '7' || octalTextArea.getText().length()>9) evt.consume(); 
     }//GEN-LAST:event_octalTextAreaKeyTyped
 
     /**
