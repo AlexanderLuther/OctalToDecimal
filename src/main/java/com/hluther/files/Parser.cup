@@ -1,0 +1,64 @@
+package com.hluther.parser;
+import java_cup.runtime.*;
+import com.hluther.gui.PrincipalFrame;
+import com.hluther.lexer.Lexer;
+
+
+parser code {:
+
+    private PrincipalFrame principalFrame;
+    private int n;
+    
+    public Parser(Lexer lexer, PrincipalFrame principalFrame) { 
+        super(lexer);
+        this.principalFrame = principalFrame;
+    }
+
+    public void printValue(int value){
+        principalFrame.printValue(value);
+    }
+
+    public void printProcess(String process){
+        principalFrame.printProcess(process + "\n");
+    }
+
+    public void syntax_error(Symbol s){
+       
+    }
+
+    public void unrecovered_syntax_error(Symbol s){
+       
+    } 
+:}
+
+/* Terminals */
+terminal Integer NUM;
+
+/* Non-terminals */
+non terminal Integer d;
+non terminal s;
+
+/* The grammar */
+start with s;
+
+s::=    d:value 
+        {:  printValue(value); 
+            printProcess("Todos los hijos del arbol se han sintetizado, el resultado final es: " + value);
+        :}
+        ;
+
+d::=    NUM:num d:value 
+        {: 
+            n++;
+            int op = value + (num * (int)Math.pow(8, n));
+            printProcess("Se multiplica " + num + " por 8^" +n+ " y se suma al valor previamente sintetizado de " +value+ ". Se sintetiza el resultado: " + op);
+            RESULT = op;
+        :}
+        | NUM:num 
+        {: 
+            n = 0;
+            int op = num * (int)Math.pow(8, n);
+            printProcess("Se multiplica " + num + " por 8^" +n+ " y se sintetiza el resultado: " + op);
+            RESULT = op;
+        :}
+        ;
